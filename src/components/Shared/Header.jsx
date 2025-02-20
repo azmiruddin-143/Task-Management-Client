@@ -8,6 +8,19 @@ const Header = () => {
     const { user, googleRegister, userLogout, setuser } = useContext(AuthContext)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+    const userLogoutHandler = () => {
+        userLogout()
+            .then(() => {
+                console.log("logout");
+            })
+            .catch((error) => {
+
+                console.log("err",error);
+
+            });
+
+    };
+
     const googleSignin = () => {
         googleRegister()
             .then((result) => {
@@ -50,7 +63,7 @@ const Header = () => {
 
                     {
                         user ?
-                            <button onClick={userLogout} className='sm:py-2 py-1 px-3 sm:text-md text-sm sm:px-4 bg-gradient-to-r from-[#72b626] to-yellow-500 rounded-full text-white font-bold'>
+                            <button onClick={userLogoutHandler} className='sm:py-2 py-1 px-3 sm:text-md text-sm sm:px-4 bg-gradient-to-r from-[#72b626] to-yellow-500 rounded-full text-white font-bold'>
                                 Logout
                             </button>
                             :
