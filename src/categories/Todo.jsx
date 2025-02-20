@@ -1,9 +1,32 @@
 import { useState } from "react";
 import TaskEdidModal from "../modal/TaskEdidModal";
 import { FaEye } from 'react-icons/fa6';
-const Todo = ({ filteredTask,refetch }) => {
+import TaskDelete from "../modal/TaskDelete";
+import { GiClick } from 'react-icons/gi';
+import axios from "axios";
+const Todo = ({ filteredTask, refetch }) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
-    const { title, description, category } = filteredTask
+    let [isOpen, setIsOpen] = useState(false)
+    const { title, description, category, _id } = filteredTask
+    function openModal() {
+        setIsOpen(true)
+    }
+    function closeModal() {
+        setIsOpen(false)
+    }
+
+    const taslDelete = () => {
+        axios.delete(`http://localhost:5000/task/${_id}`)
+            .then(result => {
+                console.log(result.data);
+                refetch()
+                setIsEditModalOpen(false)
+                // navigate('/')
+            })
+    }
+
+
+
     return (
         <div className='border p-2 rounded-sm' >
             <h1>{title}</h1>
@@ -31,8 +54,28 @@ const Todo = ({ filteredTask,refetch }) => {
                     isOpen={isEditModalOpen}
                     setIsEditModalOpen={setIsEditModalOpen}
                     filteredTask={filteredTask}
-                    refetch ={refetch}
+                    refetch={refetch}
                 />
+            </div>
+            {/* delete */}
+            <div className=''>
+                <div className='flex justify-end' >
+                    <span
+                        onClick={openModal}
+                        className='relative cursor-pointer  inline-block px-3 py-2 font-semibold text-white leading-tight'
+                    >
+                        <span
+                            aria-hidden='true'
+                            className='absolute inset-0 bg-black  rounded-full'
+                        ></span>
+
+                        <div className='flex items-center gap-0'>
+                            <span className='relative'>Delete</span>
+                            <GiClick className=' relative text-lg' />
+                        </div>
+                    </span>
+                </div>
+                <TaskDelete isOpen={isOpen} closeModal={closeModal} taslDelete ={taslDelete} />
             </div>
         </div>
 

@@ -2,7 +2,6 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import LoadingSpinner from '../Shared/LoadingSpinner';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
-import { key } from 'localforage';
 import Todo from '../../categories/Todo';
 const Task = () => {
     const { data: task = [], isLoading, refetch } = useQuery({
