@@ -3,6 +3,7 @@ import LoadingSpinner from '../Shared/LoadingSpinner';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { key } from 'localforage';
+import Todo from '../../categories/Todo';
 const Task = () => {
     const { data: task = [], isLoading, refetch } = useQuery({
         queryKey: ['task'],
@@ -44,18 +45,13 @@ const Task = () => {
             </TabList>
 
             <TabPanels className="mt-4">
-                <TabPanel className="">
-                    {/* <h1 className="text-xl font-bold">Azmir</h1> */}
-                    <div>
+                <TabPanel >
+
+                    <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2.5 container mx-auto'>
                         {
                             task.filter(task => task.category === "To-Do").map(filteredTask =>
-                                <div key={filteredTask._id} >
-                                    <h1>{filteredTask.title}</h1>
-                                    <p>{filteredTask.description}</p>
-                                    <h1>{filteredTask.category}</h1>
-                                </div>
+                                <Todo key={filteredTask._id} filteredTask ={filteredTask} refetch ={refetch} ></Todo>
                             )
-
                         }
                     </div>
 
