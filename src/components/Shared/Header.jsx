@@ -1,10 +1,31 @@
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/AzmirUddin.png';
 import { IoIosCloseCircle } from 'react-icons/io';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../provider/AuthProvider';
 
 const Header = () => {
+    const { user, googleRegister, userLogout, setuser } = useContext(AuthContext)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const googleSignin = () => {
+        googleRegister()
+            .then((result) => {
+                setuser(result.user);
+                // const userInfo = {
+                //     userName: result.user?.displayName,
+                //     userEmail: result.user?.email,
+                //     userphoto: result.user?.photoURL,
+                //     userRole: "User"
+                // }
+                // axios.post('https://medi-mart-server-opal.vercel.app/users', userInfo)
+                //     .then(result => {
+                //         setuser(result.data);
+                //         navigate('/')
+                //     })
+            })
+    }
+
 
     return (
         <div className='bg-[#00000086] border-b border-[#5b5b5b15] shadow-sm backdrop-blur-md sticky z-10 top-0'>
@@ -24,11 +45,19 @@ const Header = () => {
                         {/* <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/services'>Services</NavLink>
                         <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/contact'>Contact</NavLink> */}
                     </ul>
-                    
+
                     {/* Hire Me Button */}
-                    <button className='sm:py-2 py-1 px-3 sm:text-md text-sm sm:px-4 bg-gradient-to-r from-[#72b626] to-yellow-500 rounded-full text-white font-bold'>
-                        Signin
-                    </button>
+
+                    {
+                        user ?
+                            <button onClick={userLogout} className='sm:py-2 py-1 px-3 sm:text-md text-sm sm:px-4 bg-gradient-to-r from-[#72b626] to-yellow-500 rounded-full text-white font-bold'>
+                                Logout
+                            </button>
+                            :
+                            <button onClick={googleSignin} className='sm:py-2 py-1 px-3 sm:text-md text-sm sm:px-4 bg-gradient-to-r from-[#72b626] to-yellow-500 rounded-full text-white font-bold'>
+                                Signin
+                            </button>
+                    }
 
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
