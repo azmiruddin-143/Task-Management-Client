@@ -7,6 +7,7 @@ import {
 import "./index.css";
 import MainLaout from './layout/MainLaout';
 import AuthProvider from './provider/AuthProvider';
+import AddTask from './components/page/AddTask';
 
 const router = createBrowserRouter([
   {
@@ -14,8 +15,8 @@ const router = createBrowserRouter([
     element: <MainLaout></MainLaout>,
     children: [
       {
-        path: "/",
-        element: "dfhh"
+        path: "/addtask",
+        element: <AddTask></AddTask>
       }
     ]
   },

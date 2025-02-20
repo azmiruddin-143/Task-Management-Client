@@ -16,7 +16,7 @@ const Header = () => {
             })
             .catch((error) => {
 
-                console.log("err",error);
+                console.log("err", error);
 
             });
 
@@ -57,14 +57,15 @@ const Header = () => {
                     {/* Navigation Menu */}
                     <ul className="hidden lg:flex text-lg gap-6">
                         <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/'>Task</NavLink>
-                        <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/about'>Add Task</NavLink>
+                        <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/addtask'>Add Task</NavLink>
                         {/* <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/services'>Services</NavLink>
                         <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/contact'>Contact</NavLink> */}
                     </ul>
 
                     {/* Hire Me Button */}
 
-                    {
+
+                    <div className='flex items-center gap-3'> {
                         user ?
                             <button onClick={userLogoutHandler} className='sm:py-2 py-1 px-3 sm:text-md text-sm sm:px-4 bg-gradient-to-r from-[#72b626] to-yellow-500 rounded-full text-white font-bold'>
                                 Logout
@@ -74,6 +75,7 @@ const Header = () => {
                                 Signin
                             </button>
                     }
+                        <img className='w-[40px] rounded-full' src={user?.photoURL} alt="" /></div>
 
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
@@ -89,7 +91,7 @@ const Header = () => {
                                 </button>
                                 <ul className='flex flex-col space-y-4'>
                                     <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/'>Home</NavLink>
-                                    <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/about'>About</NavLink>
+                                    <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/addtask'>About</NavLink>
                                     <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/services'>Services</NavLink>
                                     <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/contact'>Contact</NavLink>
                                 </ul>
