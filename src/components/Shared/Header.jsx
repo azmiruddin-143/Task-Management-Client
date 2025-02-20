@@ -42,7 +42,6 @@ const Header = () => {
             })
     }
 
-
     return (
         <div className='bg-[#00000086] border-b border-[#5b5b5b15] shadow-sm backdrop-blur-md sticky z-10 top-0'>
             <div className='2xl:mx-52 xl:mx-20 lg:px-6 flex items-center justify-between py-3'>

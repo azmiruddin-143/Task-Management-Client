@@ -1,16 +1,38 @@
-
+import axios from "axios";
 
 const AddTask = () => {
+    const addTask = (e) => {
+        e.preventDefault()
+        const title = e.target.title.value
+        const description = e.target.description.value
+        const category = e.target.category.value
+        const date = Date.now()
+        const taskAdd = {
+            title,
+            description,
+            category,
+            date
+            
+        }
+        e.target.reset()
+        axios.post('http://localhost:5000/task', taskAdd)
+            .then(result => {
+                console.log(result.data);
+                // navigate('/')
+            })
+    }
+
     return (
         <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
             <h2 className="text-2xl font-bold mb-4 text-center">Create Task</h2>
 
-            <form className="space-y-4">
+            <form onSubmit={addTask} className="space-y-4">
                 {/* Title Input */}
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Title</label>
                     <input
                         type="text"
+                        name="title"
                         className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter title"
                     />
@@ -21,6 +43,7 @@ const AddTask = () => {
                     <label className="block text-sm font-medium text-gray-700">Description</label>
                     <textarea
                         rows="3"
+                        name="description"
                         className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter description"
                     />
@@ -29,7 +52,8 @@ const AddTask = () => {
                 {/* Category Select Dropdown */}
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Category</label>
-                    <select className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <select name="category" className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="To-Do">Select Category</option>
                         <option value="To-Do">To-Do</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Done">Done</option>
