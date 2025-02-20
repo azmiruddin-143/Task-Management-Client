@@ -3,6 +3,7 @@ import logo from '../../assets/AzmirUddin.png';
 import { IoIosCloseCircle } from 'react-icons/io';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
+import axios from 'axios';
 
 const Header = () => {
     const { user, googleRegister, userLogout, setuser } = useContext(AuthContext)
@@ -25,17 +26,19 @@ const Header = () => {
         googleRegister()
             .then((result) => {
                 setuser(result.user);
-                // const userInfo = {
-                //     userName: result.user?.displayName,
-                //     userEmail: result.user?.email,
-                //     userphoto: result.user?.photoURL,
-                //     userRole: "User"
-                // }
-                // axios.post('https://medi-mart-server-opal.vercel.app/users', userInfo)
-                //     .then(result => {
-                //         setuser(result.data);
-                //         navigate('/')
-                //     })
+                console.log(result.user);
+                const userInfo = {
+                    userName: result.user?.displayName,
+                    userEmail: result.user?.email,
+                    userphoto: result.user?.photoURL,
+                    userRole: "User"
+                }
+                axios.post('http://localhost:5000/users', userInfo)
+                    .then(result => {
+                        setuser(result.data);
+                        console.log(result.data);
+                        // navigate('/')
+                    })
             })
     }
 
