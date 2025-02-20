@@ -7,7 +7,7 @@ import axios from "axios";
 const Todo = ({ filteredTask, refetch }) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
     let [isOpen, setIsOpen] = useState(false)
-    const { title, description, category, _id } = filteredTask
+    const { title, description, category,_id } = filteredTask
     function openModal() {
         setIsOpen(true)
     }
@@ -15,16 +15,15 @@ const Todo = ({ filteredTask, refetch }) => {
         setIsOpen(false)
     }
 
-    const taslDelete = () => {
+    const taskDelete = () => {
         axios.delete(`http://localhost:5000/task/${_id}`)
             .then(result => {
                 console.log(result.data);
                 refetch()
-                setIsEditModalOpen(false)
-                // navigate('/')
+                // setIsEditModalOpen(false)
+
             })
     }
-
 
 
     return (
@@ -75,7 +74,7 @@ const Todo = ({ filteredTask, refetch }) => {
                         </div>
                     </span>
                 </div>
-                <TaskDelete isOpen={isOpen} closeModal={closeModal} taslDelete ={taslDelete} />
+                <TaskDelete isOpen={isOpen} closeModal={closeModal} taskDelete={taskDelete} />
             </div>
         </div>
 

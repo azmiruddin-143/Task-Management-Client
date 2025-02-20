@@ -7,7 +7,7 @@ import {
   } from '@headlessui/react'
   import { Fragment } from 'react'
   import PropTypes from 'prop-types'
-  const TaskDelete = ({ closeModal, isOpen ,taslDelete,}) => {
+  const TaskDelete = ({ closeModal, isOpen ,taskDelete,}) => {
     return (
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as='div' className='relative z-10' onClose={closeModal}>
@@ -50,7 +50,7 @@ import {
                   <div className='flex mt-2 justify-around'>
                     <button
                       type='button'
-                      onClick={taslDelete}
+                      onClick={taskDelete}
                       className='inline-flex justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white '
                     >
                       Yes

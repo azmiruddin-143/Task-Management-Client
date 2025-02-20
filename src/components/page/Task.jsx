@@ -3,6 +3,8 @@ import LoadingSpinner from '../Shared/LoadingSpinner';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import Todo from '../../categories/Todo';
+import InProgress from '../../categories/InProgress';
+import Done from '../../categories/Done';
 const Task = () => {
     const { data: task = [], isLoading, refetch } = useQuery({
         queryKey: ['task'],
@@ -12,7 +14,7 @@ const Task = () => {
         }
     });
 
-    console.log(task);
+
     if (isLoading) return <LoadingSpinner />;
     return (
         <TabGroup>
@@ -49,7 +51,7 @@ const Task = () => {
                     <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2.5 container mx-auto'>
                         {
                             task.filter(task => task.category === "To-Do").map(filteredTask =>
-                                <Todo key={filteredTask._id} filteredTask ={filteredTask} refetch ={refetch} ></Todo>
+                                <Todo key={filteredTask._id} filteredTask={filteredTask} refetch={refetch}  ></Todo>
                             )
                         }
                     </div>
@@ -57,28 +59,21 @@ const Task = () => {
 
                 </TabPanel>
                 <TabPanel className="p-4 bg-gray-50 rounded-lg shadow">
-                    <div>
+
+                    <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2.5 container mx-auto'>
                         {
                             task.filter(task => task.category === "In Progress").map(filteredTask =>
-
-                                <div key={filteredTask._id} >
-                                    <h1>{filteredTask.title}</h1>
-                                </div>
+                                <InProgress key={filteredTask._id} filteredTask={filteredTask} refetch={refetch} ></InProgress>
                             )
-
                         }
                     </div>
                 </TabPanel>
                 <TabPanel className="p-4 bg-gray-50 rounded-lg shadow">
-                    <div>
+                    <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2.5 container mx-auto'>
                         {
                             task.filter(task => task.category === "Done").map(filteredTask =>
-
-                                <div key={filteredTask._id} >
-                                    <h1>{filteredTask.title}</h1>
-                                </div>
+                                <Done key={filteredTask._id} filteredTask={filteredTask} refetch={refetch} ></Done>
                             )
-
                         }
                     </div>
                 </TabPanel>
