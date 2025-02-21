@@ -30,7 +30,6 @@ const InProgress = ({ filteredTask, refetch }) => {
             <h1>{title}</h1>
             <p>{description}</p>
             <h1>{category}</h1>
-
             {/* */}
             <div className=' py-5 border-b border-gray-200 bg-white text-sm'>
                 <span

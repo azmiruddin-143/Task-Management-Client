@@ -5,11 +5,14 @@ import { useQuery } from '@tanstack/react-query';
 import Todo from '../../categories/Todo';
 import InProgress from '../../categories/InProgress';
 import Done from '../../categories/Done';
+import { AuthContext } from '../../provider/AuthProvider';
+import { useContext } from 'react';
 const Task = () => {
+    const { user } = useContext(AuthContext)
     const { data: task = [], isLoading, refetch } = useQuery({
-        queryKey: ['task'],
+        queryKey: ['task', user?.email],
         queryFn: async () => {
-            const { data } = await axios.get('http://localhost:5000/task');
+            const { data } = await axios.get(`http://localhost:5000/task/${user?.email}`);
             return data;
         }
     });
@@ -48,37 +51,51 @@ const Task = () => {
             <TabPanels className="mt-4">
                 <TabPanel >
 
-                    <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2.5 container mx-auto'>
-                        {
-                            task.filter(task => task.category === "To-Do").map(filteredTask =>
-                                <Todo key={filteredTask._id} filteredTask={filteredTask} refetch={refetch}  ></Todo>
-                            )
-                        }
-                    </div>
+                    {
+                        task.length === 0 ?
+                            <h1 > No data Fount</h1> :
+                            <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2.5 container mx-auto'>
+                                {
+                                    task.filter(task => task.category === "To-Do").map(filteredTask =>
+                                        <Todo key={filteredTask._id} filteredTask={filteredTask} refetch={refetch}  ></Todo>
+                                    )
+                                }
+                            </div>
+                    }
 
 
                 </TabPanel>
-                <TabPanel className="p-4 bg-gray-50 rounded-lg shadow">
+                <TabPanel>
 
-                    <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2.5 container mx-auto'>
-                        {
-                            task.filter(task => task.category === "In Progress").map(filteredTask =>
-                                <InProgress key={filteredTask._id} filteredTask={filteredTask} refetch={refetch} ></InProgress>
-                            )
-                        }
-                    </div>
+                    {
+                        task.length === 0 ?
+                            <h1 > No data Fount</h1> :
+                            <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2.5 container mx-auto'>
+                                {
+                                    task.filter(task => task.category === "In Progress").map(filteredTask =>
+                                        <InProgress key={filteredTask._id} filteredTask={filteredTask} refetch={refetch} ></InProgress>
+                                    )
+                                }
+                            </div>
+                    }
+
                 </TabPanel>
-                <TabPanel className="p-4 bg-gray-50 rounded-lg shadow">
-                    <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2.5 container mx-auto'>
-                        {
-                            task.filter(task => task.category === "Done").map(filteredTask =>
-                                <Done key={filteredTask._id} filteredTask={filteredTask} refetch={refetch} ></Done>
-                            )
-                        }
-                    </div>
+                <TabPanel>
+                    {
+                        task.length === 0 ?
+                            <h1 > No data Fount</h1> :
+                            <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2.5 container mx-auto'>
+                                {
+                                    task.filter(task => task.category === "Done").map(filteredTask =>
+                                        <Done key={filteredTask._id} filteredTask={filteredTask} refetch={refetch} ></Done>
+                                    )
+                                }
+                            </div>
+                    }
+
                 </TabPanel>
             </TabPanels>
-        </TabGroup>
+        </TabGroup >
     );
 };
 

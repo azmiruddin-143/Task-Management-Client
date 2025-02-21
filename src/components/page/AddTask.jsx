@@ -1,18 +1,22 @@
 import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const AddTask = () => {
+   const { user } = useContext(AuthContext)
     const addTask = (e) => {
         e.preventDefault()
         const title = e.target.title.value
         const description = e.target.description.value
         const category = e.target.category.value
         const date = Date.now()
+        const userEmail = user?.email
         const taskAdd = {
             title,
             description,
             category,
-            date
-            
+            date,
+            userEmail
         }
         // e.target.reset()
         axios.post('http://localhost:5000/task', taskAdd)
