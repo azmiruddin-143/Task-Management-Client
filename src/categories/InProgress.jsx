@@ -34,8 +34,8 @@ const InProgress = ({ filteredTask, refetch }) => {
                 <h1 className="text-xl text-white font-bold">{title}</h1>
                 <p className="text-gray-200">{description}</p>
                 <div className="flex items-end gap-0">
-                    <h1 className="bg-red-300 font-bold py-1 px-4 rounded-full">{category}</h1>
-                    <h3 className="py-1 px-4">{formattedDate}</h3>
+                    <h1 className="bg-yellow-600 font-bold py-1 px-4 rounded-full">{category}</h1>
+                    <h3 className="py-1 px-4 text-white">{formattedDate}</h3>
                 </div>
             </div>
             {/* */}

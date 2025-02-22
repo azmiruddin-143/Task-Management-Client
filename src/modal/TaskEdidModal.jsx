@@ -46,7 +46,7 @@ const TaskEdidModal = ({ setIsEditModalOpen, isOpen,filteredTask,refetch }) => {
                   as='h3'
                   className='text-lg font-medium text-center leading-6 text-gray-900'
                 >
-                  Details Medicine
+                
                 </DialogTitle>
                 <div className='mt-2 w-full'>
                   <TaskForm filteredTask ={filteredTask} refetch={refetch} setIsEditModalOpen ={setIsEditModalOpen} />
@@ -55,7 +55,7 @@ const TaskEdidModal = ({ setIsEditModalOpen, isOpen,filteredTask,refetch }) => {
                 <div className='mt-2 '>
                   <button
                     type='button'
-                    className='inline-flex justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white '
+                    className='inline-flex justify-center rounded-md  bg-black px-4 py-2 text-sm font-medium text-white '
                     onClick={() => setIsEditModalOpen(false)}
                   >
                     Cancel

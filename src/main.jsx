@@ -18,17 +18,28 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Task></Task>
+        element: <PrivateRoute><Task></Task></PrivateRoute>
       },
       {
         path: "/addtask",
-        element: <AddTask></AddTask>
+        element: <PrivateRoute><AddTask></AddTask></PrivateRoute>
+      },
+      {
+        path: "/signup",
+        element: <SignUp></SignUp>
+      },
+      {
+        path: "/signin",
+        element: <SignIn></SignIn>
       }
     ]
   },
 ]);
 
 import { QueryClient } from '@tanstack/react-query'
+import SignUp from './components/page/SignUp';
+import SignIn from './components/page/SignIn';
+import PrivateRoute from './components/Shared/PrivateRoute';
 const queryClient = new QueryClient()
 createRoot(document.getElementById('root')).render(
   <AuthProvider>

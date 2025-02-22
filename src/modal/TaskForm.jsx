@@ -36,7 +36,7 @@ const TaskForm = ({filteredTask,refetch,setIsEditModalOpen}) => {
                         type="text"
                         defaultValue={title}
                         name="title"
-                        className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                        className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500"
                         placeholder="Enter title"
                     />
                 </div>
@@ -48,7 +48,7 @@ const TaskForm = ({filteredTask,refetch,setIsEditModalOpen}) => {
                         rows="3"
                         defaultValue={description}
                         name="description"
-                        className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                        className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500"
                         placeholder="Enter description"
                     />
                 </div>
@@ -68,7 +68,7 @@ const TaskForm = ({filteredTask,refetch,setIsEditModalOpen}) => {
                 {/* Submit Button */}
                 <button
                     type="submit"
-                    className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+                    className="w-full bg-yellow-500 text-white py-2 px-4 rounded-lg transition"
                 >
                     Update Task
                 </button>
