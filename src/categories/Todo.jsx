@@ -24,25 +24,24 @@ const Todo = ({ filteredTask, refetch }) => {
                 console.log(result.data);
                 refetch()
                 // setIsEditModalOpen(false)
-
             })
     }
 
 
     return (
-        <div className='border p-2 rounded-sm' >
+        <div className='border bg-red-600 p-2 rounded-sm' >
             <div className="space-y-2">
                 <h1 className="text-xl font-bold">{title}</h1>
                 <p className="text-gray-800">{description}</p>
                 <div className="flex items-end gap-0">
-                    <h1 className="bg-red-600 py-1 px-4 rounded-full">{category}</h1>
+                    <h1 className="bg-red-100 py-1 px-4 rounded-full">{category}</h1>
                     <h3 className="py-1 px-4">{formattedDate}</h3>
                 </div>
             </div>
 
             {/* */}
             <div className="flex items-center justify-between">
-                <div className=' py-5  bg-white text-sm'>
+                <div className=' py-5  text-sm'>
                     <span
                         onClick={() => { setIsEditModalOpen(true) }}
                         className='relative cursor-pointer inline-block px-3 py-2 font-semibold text-white leading-tight'

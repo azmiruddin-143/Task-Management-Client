@@ -1,4 +1,3 @@
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import LoadingSpinner from '../Shared/LoadingSpinner';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
@@ -7,8 +6,12 @@ import InProgress from '../../categories/InProgress';
 import Done from '../../categories/Done';
 import { AuthContext } from '../../provider/AuthProvider';
 import { useContext } from 'react';
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+
 const Task = () => {
-    const { user } = useContext(AuthContext)
+    const { user } = useContext(AuthContext);
+    
+    // Fetch tasks from backend
     const { data: task = [], isLoading, refetch } = useQuery({
         queryKey: ['task', user?.email],
         queryFn: async () => {
@@ -17,85 +20,95 @@ const Task = () => {
         }
     });
 
-
     if (isLoading) return <LoadingSpinner />;
+
+    // Drag and Drop Function
+    const handleDragEnd = async (result) => {
+        if (!result.destination) return;
+
+        const { source, destination, draggableId } = result;
+
+        // নতুন ক্যাটাগরি খুঁজে বের করা
+        const newCategory = destination.droppableId;
+
+        // Backend এ category update করা
+        try {
+            await axios.put(`http://localhost:5000/task/update/${draggableId}`, { category: newCategory });
+            refetch(); // UI Update
+        } catch (error) {
+            console.error("Error updating task category:", error);
+        }
+    };
+
     return (
-        <TabGroup>
-            <TabList className="flex justify-center gap-3.5  p-2 rounded-lg">
-                <Tab
-                    className={({ selected }) =>
-                        `px-4 py-2 text-lg font-semibold rounded-lg transition-all ${selected ? "bg-red-500 text-white" : "bg-white text-black"
-                        }`
-                    }
-                >
-                    To-Do
-                </Tab>
-                <Tab
-                    className={({ selected }) =>
-                        `px-4 py-2 text-lg font-semibold rounded-lg transition-all ${selected ? "bg-red-500 text-white" : "bg-white text-black"
-                        }`
-                    }
-                >
-                    In Progress
-                </Tab>
-                <Tab
-                    className={({ selected }) =>
-                        `px-4 py-2 text-lg font-semibold rounded-lg transition-all ${selected ? "bg-red-500 text-white" : "bg-white text-black"
-                        }`
-                    }
-                >
-                    Done
-                </Tab>
-            </TabList>
+        <DragDropContext onDragEnd={handleDragEnd}>
+            <div className='grid grid-cols-3 gap-6 mx-36 my-10'>
 
-            <TabPanels className="mt-4">
-                <TabPanel >
-
-                    {
-                        task.length === 0 ?
-                            <h1 > No data Fount</h1> :
-                            <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2.5 container mx-auto'>
-                                {
-                                    task.filter(task => task.category === "To-Do").map(filteredTask =>
-                                        <Todo key={filteredTask._id} filteredTask={filteredTask} refetch={refetch}  ></Todo>
-                                    )
-                                }
+                {/* TO-DO */}
+                <Droppable droppableId="To-Do">
+                    {(provided) => (
+                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                            <h1 className='text-center pb-3.5'>TO-DO</h1>
+                            <div className='bg-amber-400 p-6 rounded-2xl'>
+                                {task.filter(task => task.category === "To-Do").map((filteredTask, index) => (
+                                    <Draggable key={filteredTask._id} draggableId={filteredTask._id} index={index}>
+                                        {(provided) => (
+                                            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                <Todo filteredTask={filteredTask} refetch={refetch} />
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                ))}
+                                {provided.placeholder}
                             </div>
-                    }
+                        </div>
+                    )}
+                </Droppable>
 
-
-                </TabPanel>
-                <TabPanel>
-
-                    {
-                        task.length === 0 ?
-                            <h1 > No data Fount</h1> :
-                            <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2.5 container mx-auto'>
-                                {
-                                    task.filter(task => task.category === "In Progress").map(filteredTask =>
-                                        <InProgress key={filteredTask._id} filteredTask={filteredTask} refetch={refetch} ></InProgress>
-                                    )
-                                }
+                {/* IN PROGRESS */}
+                <Droppable droppableId="In Progress">
+                    {(provided) => (
+                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                            <h1 className='text-center pb-3.5'>In Progress</h1>
+                            <div className='bg-red-500 p-6 rounded-2xl'>
+                                {task.filter(task => task.category === "In Progress").map((filteredTask, index) => (
+                                    <Draggable key={filteredTask._id} draggableId={filteredTask._id} index={index}>
+                                        {(provided) => (
+                                            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                <InProgress filteredTask={filteredTask} refetch={refetch} />
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                ))}
+                                {provided.placeholder}
                             </div>
-                    }
+                        </div>
+                    )}
+                </Droppable>
 
-                </TabPanel>
-                <TabPanel>
-                    {
-                        task.length === 0 ?
-                            <h1 > No data Fount</h1> :
-                            <div className='grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2.5 container mx-auto'>
-                                {
-                                    task.filter(task => task.category === "Done").map(filteredTask =>
-                                        <Done key={filteredTask._id} filteredTask={filteredTask} refetch={refetch} ></Done>
-                                    )
-                                }
+                {/* DONE */}
+                <Droppable droppableId="Done">
+                    {(provided) => (
+                        <div ref={provided.innerRef} {...provided.droppableProps}>
+                            <h1 className='text-center pb-3.5'>Done</h1>
+                            <div className='bg-blue-500 p-6 rounded-2xl'>
+                                {task.filter(task => task.category === "Done").map((filteredTask, index) => (
+                                    <Draggable key={filteredTask._id} draggableId={filteredTask._id} index={index}>
+                                        {(provided) => (
+                                            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                <Done filteredTask={filteredTask} refetch={refetch} />
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                ))}
+                                {provided.placeholder}
                             </div>
-                    }
+                        </div>
+                    )}
+                </Droppable>
 
-                </TabPanel>
-            </TabPanels>
-        </TabGroup >
+            </div>
+        </DragDropContext>
     );
 };
 
