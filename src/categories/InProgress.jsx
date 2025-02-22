@@ -6,9 +6,12 @@ import { GiClick } from 'react-icons/gi';
 import axios from "axios";
 
 const InProgress = ({ filteredTask, refetch }) => {
-    const { title, description, category, _id } = filteredTask
+    const { title, description, category, _id ,date} = filteredTask
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
     let [isOpen, setIsOpen] = useState(false)
+    const dateFromMongoDB = date;
+    const dateObject = new Date(dateFromMongoDB);
+    const formattedDate = `${dateObject.getMonth() + 1}/${dateObject.getDate()}/${dateObject.getFullYear()}`;
     function openModal() {
         setIsOpen(true)
     }
@@ -16,7 +19,7 @@ const InProgress = ({ filteredTask, refetch }) => {
         setIsOpen(false)
     }
     const taskDelete = () => {
-        axios.delete(`http://localhost:5000/task/${_id}`)
+        axios.delete(`https://task-management-server-olive-three.vercel.app/task/${_id}`)
             .then(result => {
                 console.log(result.data);
                 refetch()
@@ -26,13 +29,13 @@ const InProgress = ({ filteredTask, refetch }) => {
     }
 
     return (
-        <div className='border p-2 rounded-sm' >
+        <div className='border border-yellow-300 bg-[#0000009f] mb-2 p-2 rounded-sm' >
             <div className="space-y-2">
-                <h1 className="text-xl font-bold">{title}</h1>
-                <p className="text-gray-800">{description}</p>
+                <h1 className="text-xl text-white font-bold">{title}</h1>
+                <p className="text-gray-200">{description}</p>
                 <div className="flex items-end gap-0">
-                    <h1 className="bg-red-600 py-1 px-4 rounded-full">{category}</h1>
-                    {/* <h3 className="py-1 px-4">{formattedDate}</h3> */}
+                    <h1 className="bg-red-300 font-bold py-1 px-4 rounded-full">{category}</h1>
+                    <h3 className="py-1 px-4">{formattedDate}</h3>
                 </div>
             </div>
             {/* */}

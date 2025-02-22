@@ -19,7 +19,7 @@ const AddTask = () => {
             userEmail
         }
         // e.target.reset()
-        axios.post('http://localhost:5000/task', taskAdd)
+        axios.post('https://task-management-server-olive-three.vercel.app/task', taskAdd)
             .then(result => {
                 console.log(result.data);
                 // navigate('/')

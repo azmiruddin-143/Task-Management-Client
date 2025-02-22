@@ -19,7 +19,7 @@ const Todo = ({ filteredTask, refetch }) => {
     }
 
     const taskDelete = () => {
-        axios.delete(`http://localhost:5000/task/${_id}`)
+        axios.delete(`https://task-management-server-olive-three.vercel.app/task/${_id}`)
             .then(result => {
                 console.log(result.data);
                 refetch()
@@ -29,12 +29,12 @@ const Todo = ({ filteredTask, refetch }) => {
 
 
     return (
-        <div className='border bg-red-600 p-2 rounded-sm' >
-            <div className="space-y-2">
+        <div className='border bg-[#00000054] mb-2 p-2 rounded-sm' >
+            <div className="space-y-2 ">
                 <h1 className="text-xl font-bold">{title}</h1>
                 <p className="text-gray-800">{description}</p>
                 <div className="flex items-end gap-0">
-                    <h1 className="bg-red-100 py-1 px-4 rounded-full">{category}</h1>
+                    <h1 className="bg-red-500 font-bold py-1 px-4 rounded-full">{category}</h1>
                     <h3 className="py-1 px-4">{formattedDate}</h3>
                 </div>
             </div>

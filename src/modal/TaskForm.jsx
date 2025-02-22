@@ -16,7 +16,7 @@ const TaskForm = ({filteredTask,refetch,setIsEditModalOpen}) => {
             
         }
         // e.target.reset()
-        axios.put(`http://localhost:5000/task/${_id}`, taskUpdate)
+        axios.put(`https://task-management-server-olive-three.vercel.app/task/${_id}`, taskUpdate)
             .then(result => {
                 console.log(result.data);
                 refetch()

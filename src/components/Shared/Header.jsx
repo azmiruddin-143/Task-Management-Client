@@ -4,6 +4,7 @@ import { IoIosCloseCircle } from 'react-icons/io';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
 import axios from 'axios';
+import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
     const { user, googleRegister, userLogout, setuser } = useContext(AuthContext)
@@ -33,7 +34,7 @@ const Header = () => {
                     userphoto: result.user?.photoURL,
                     userRole: "User"
                 }
-                axios.post('http://localhost:5000/users', userInfo)
+                axios.post('https://task-management-server-olive-three.vercel.app/users', userInfo)
                     .then(result => {
                         setuser(result.data);
                         console.log(result.data);
@@ -43,7 +44,7 @@ const Header = () => {
     }
 
     return (
-        <div className='bg-[#00000086] border-b border-[#5b5b5b15] shadow-sm backdrop-blur-md sticky z-10 top-0'>
+        <div className='bg-[#000000] border-b border-[#5b5b5b15] shadow-sm backdrop-blur-md sticky z-10 top-0'>
             <div className='2xl:mx-52 xl:mx-20 lg:px-6 flex items-center justify-between py-3'>
                 {/* Left Side - Logo */}
                 <div className='flex items-center gap-2'>
@@ -54,15 +55,18 @@ const Header = () => {
                 {/* Right Side - Menu & Hire Me Button */}
                 <div className='flex items-center gap-8'>
                     {/* Navigation Menu */}
-                    <ul className="hidden lg:flex text-lg gap-6">
-                        <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/'>Task</NavLink>
-                        <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/addtask'>Add Task</NavLink>
+                    <ul className="hidden text-white lg:flex text-lg gap-6">
+                        <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-white'} to='/'>Task</NavLink>
+                        <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-white'} to='/addtask'>Add Task</NavLink>
                         {/* <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/services'>Services</NavLink>
                         <NavLink className={({ isActive }) => isActive ? 'text-red-500' : 'text-black'} to='/contact'>Contact</NavLink> */}
                     </ul>
 
                     {/* Hire Me Button */}
 
+
+                    {/* <ThemeToggle></ThemeToggle> */}
+                 
 
                     <div className='flex items-center gap-3'> {
                         user ?
